@@ -202,45 +202,57 @@ Resources:
           - ECR_REGISTRY: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com
             APP_REPO_NAME: clarusway-repo/phonebook-app
             GITHUB_REPO: https://github.com/AdamTekin/Project-6.git
-            GIT_FILE_URL: https://raw.githubusercontent.com/callahan-cw/project-203/master/
+            GIT_FILE_URL: https://raw.githubusercontent.com/AdamTekin/Project-6/master/
   DockerManager2:
+    Type: "AWS::EC2::Instance"
+    DependsOn:
+      - DockerManager1
     Properties:
       LaunchTemplate:
         LaunchTemplateId: !Ref ManagersLT
         Version: !GetAtt ManagersLT.LatestVersionNumber
       Tags:
         - Key: Name
-          Value: !Sub Docker Grand Manager 2 of ${AWS::StackName}
+          Value: !Sub Docker Manager 2 of ${AWS::StackName}
         - Key: project
           Value: "203"
   DockerManager3:
+    Type: "AWS::EC2::Instance"
+    DependsOn:
+      - DockerManager2
     Properties:
       LaunchTemplate:
         LaunchTemplateId: !Ref ManagersLT
         Version: !GetAtt ManagersLT.LatestVersionNumber
       Tags:
         - Key: Name
-          Value: !Sub Docker Grand Manager 3 of ${AWS::StackName}
+          Value: !Sub Docker Manager 3 of ${AWS::StackName}
         - Key: project
           Value: "203"
   DockerWorker1:
+    Type: "AWS::EC2::Instance"
+    DependsOn:
+      - DockerManager1
     Properties:
       LaunchTemplate:
         LaunchTemplateId: !Ref WorkersLT
         Version: !GetAtt WorkersLT.LatestVersionNumber
       Tags:
         - Key: Name
-          Value: !Sub Docker Grand Worker 1 of ${AWS::StackName}
+          Value: !Sub Docker Worker 1 of ${AWS::StackName}
         - Key: project
           Value: "203"
   DockerWorker2:
+    Type: "AWS::EC2::Instance"
+    DependsOn:
+      - DockerWorker1
     Properties:
       LaunchTemplate:
         LaunchTemplateId: !Ref WorkersLT
         Version: !GetAtt WorkersLT.LatestVersionNumber
       Tags:
         - Key: Name
-          Value: !Sub Docker Grand Worker 2 of ${AWS::StackName}
+          Value: !Sub Docker Worker 2 of ${AWS::StackName}
         - Key: project
           Value: "203"
 Outputs:
